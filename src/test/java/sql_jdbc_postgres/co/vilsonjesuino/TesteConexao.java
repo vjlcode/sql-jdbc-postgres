@@ -1,5 +1,7 @@
 package sql_jdbc_postgres.co.vilsonjesuino;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import sql_jdbc_postgres.co.vilsonjesuino.conexao.SingleConnection;
@@ -25,5 +27,26 @@ public class TesteConexao {
 		
 		UsuarioDao dao = new UsuarioDao();
 		dao.salvar(usuario);
+	}
+	
+	@Test
+	public void testeListarUsuario() throws Exception {
+		UsuarioDao dao = new UsuarioDao();
+		List<Usuario> listarUsuario = dao.listarUsuario();
+		
+		for(Usuario usuario : listarUsuario) {
+			System.out.println(usuario);
+			System.out.println("-----------------------------");
+		}
+	}
+	
+	@Test
+	public void testeListarUnicoUsuario() throws Exception{
+		
+		UsuarioDao dao = new UsuarioDao();
+		
+		Usuario usuario = dao.listarUnicoUsuario(1L);
+		
+		System.out.println(usuario);
 	}
 }
