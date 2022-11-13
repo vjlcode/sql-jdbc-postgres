@@ -49,4 +49,22 @@ public class TesteConexao {
 		
 		System.out.println(usuario);
 	}
+	
+	@Test
+	public void testeAtualizar() {
+		
+		try {
+			
+			UsuarioDao dao = new UsuarioDao();
+			
+			Usuario usuario = dao.listarUnicoUsuario(4L);
+			
+			usuario.setNome("mudado com metodo atualizar");
+			
+			dao.atualizar(usuario);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
