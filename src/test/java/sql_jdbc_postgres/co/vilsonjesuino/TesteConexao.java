@@ -20,7 +20,6 @@ public class TesteConexao {
 		
 		Usuario usuario = new Usuario();
 		
-		usuario.setId(4L);
 		usuario.setNome("maria");
 		usuario.setEmail("maria@gmail.com");
 		

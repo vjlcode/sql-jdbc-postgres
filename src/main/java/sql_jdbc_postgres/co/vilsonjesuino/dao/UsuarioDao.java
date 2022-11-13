@@ -26,13 +26,12 @@ public class UsuarioDao {
 
 	public void salvar(Usuario usuario) {
 
-		String sql = "insert into tbl_usuario (id, nome, email) values (?, ?, ?)";
+		String sql = "insert into tbl_usuario (nome, email) values (?, ?)";
 
 		try {
 			PreparedStatement insert = connection.prepareStatement(sql);
-			insert.setLong(1, usuario.getId());
-			insert.setString(2, usuario.getNome());
-			insert.setString(3, usuario.getEmail());
+			insert.setString(1, usuario.getNome());
+			insert.setString(2, usuario.getEmail());
 			insert.execute();
 			connection.commit();
 
