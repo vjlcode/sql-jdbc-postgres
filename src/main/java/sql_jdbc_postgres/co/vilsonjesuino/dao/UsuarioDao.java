@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sql_jdbc_postgres.co.vilsonjesuino.conexao.SingleConnection;
+import sql_jdbc_postgres.co.vilsonjesuino.model.Telefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Usuario;
 
 public class UsuarioDao {
@@ -36,6 +37,34 @@ public class UsuarioDao {
 			connection.commit();
 
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Method salvar dados do telefone do usuario
+	 */
+	
+	public void salvarTelefone(Telefone telefone) {
+		
+		try {
+			
+			String sql = "insert into tbl_telefone (numero, tipo, usuariopessoa) values (?, ?, ?)";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			statement.setString(1, telefone.getNumero());
+			statement.setString(2, telefone.getTipo());
+			statement.setLong(3, telefone.getUsuario());
+			statement.execute();
+			connection.commit();
+			
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (Exception e2) {
+				e.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}

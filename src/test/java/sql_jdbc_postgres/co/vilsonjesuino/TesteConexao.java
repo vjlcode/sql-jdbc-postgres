@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import sql_jdbc_postgres.co.vilsonjesuino.conexao.SingleConnection;
 import sql_jdbc_postgres.co.vilsonjesuino.dao.UsuarioDao;
+import sql_jdbc_postgres.co.vilsonjesuino.model.Telefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Usuario;
 
 public class TesteConexao {
@@ -73,10 +74,21 @@ public class TesteConexao {
 		try {
 			
 			UsuarioDao dao = new UsuarioDao();
-			dao.deletar(4L);
+			dao.deletar(7L);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testeSalvarTelefone() {
+		Telefone telefone = new Telefone();
+		telefone.setNumero("4222222222");
+		telefone.setTipo("casa");
+		telefone.setUsuario(9L);
+		
+		UsuarioDao dao = new UsuarioDao();
+		dao.salvarTelefone(telefone);
 	}
 }
