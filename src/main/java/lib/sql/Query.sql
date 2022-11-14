@@ -17,3 +17,15 @@ maxvalue 9223372036854775807
 start 7;
 
 alter table tbl_usuario ALTER column id set default nextval('tbl_usuariosequence'::regclass);
+
+alter table tbl_usuario add unique (id);
+
+create table tbl_telefone(
+id bigint not null,
+numero character varying(255) not null,
+tipo character varying(255) not null,
+usuariopessoa bigint not null,
+constraint telefone_id primary key (id)
+);
+
+alter table tbl_telefone add foreign key (usuariopessoa) references tbl_usuario(id);
