@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sql_jdbc_postgres.co.vilsonjesuino.conexao.SingleConnection;
+import sql_jdbc_postgres.co.vilsonjesuino.model.BeanUsuarioTelefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Telefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Usuario;
 
@@ -40,25 +41,24 @@ public class UsuarioDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Method salvar dados do telefone do usuario
 	 */
-	
+
 	public void salvarTelefone(Telefone telefone) {
-		
+
 		try {
-			
+
 			String sql = "insert into tbl_telefone (numero, tipo, usuariopessoa) values (?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
-			
+
 			statement.setString(1, telefone.getNumero());
 			statement.setString(2, telefone.getTipo());
 			statement.setLong(3, telefone.getUsuario());
 			statement.execute();
 			connection.commit();
-			
-			
+
 		} catch (Exception e) {
 			try {
 				connection.rollback();
@@ -121,6 +121,38 @@ public class UsuarioDao {
 		return retorno;
 	}
 
+	public List<BeanUsuarioTelefone> listaUserFone (Long idUser){
+		
+		List<BeanUsuarioTelefone> beanUsuarioTelefones = new ArrayList<BeanUsuarioTelefone>();
+		
+		String sql = "select nome, numero, email from tbl_telefone as fone";
+		sql += "inner join tbl_usuario as usua";
+		sql += "on fone.usuariopessoa = usua.id";
+		sql += "where usua.id = " + idUser;
+		
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultado = statement.executeQuery();
+			
+			while(resultado.next()) {
+				
+				BeanUsuarioTelefone beanUsuarioTelefone = new BeanUsuarioTelefone();
+				
+				beanUsuarioTelefone.setEmail(resultado.getString("email"));
+				beanUsuarioTelefone.setNome(resultado.getString("nome"));
+				beanUsuarioTelefone.setNumero(resultado.getString("numero"));
+				
+				beanUsuarioTelefones.add(beanUsuarioTelefone);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("erro aqui no banco de dados");
+		}
+		
+		return beanUsuarioTelefones;
+	}
+
 	/**
 	 * Method atualiza no banco de dados
 	 * 
@@ -149,21 +181,22 @@ public class UsuarioDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Method delete dados no banco de dados
+	 * 
 	 * @param id
 	 */
-	
+
 	public void deletar(Long id) {
-		
+
 		try {
-			
+
 			String sql = "delete from tbl_usuario where id = " + id;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.execute();
 			connection.commit();
-			
+
 		} catch (Exception e) {
 			try {
 				connection.rollback();

@@ -1,4 +1,6 @@
-﻿create table tbl_usuario(
+﻿/*Dados Usuario*/
+
+create table tbl_usuario(
 id bigint not null,
 nome character varying(255),
 email character varying(255),
@@ -20,6 +22,9 @@ start 7;
 alter table tbl_usuario ALTER column id set default nextval('tbl_usuariosequence'::regclass);
 
 alter table tbl_usuario add unique (id);
+
+
+/*Dados Telefone*/
 
 create table tbl_telefone(
 id bigint not null,
@@ -46,3 +51,25 @@ INSERT INTO tbl_usuario(nome, email) VALUES ('joao maria','joaomaria@gmail.com')
 INSERT INTO tbl_telefone(numero, tipo, usuariopessoa) VALUES ('544454545', 'celular', 8);
 
 select * from tbl_telefone;
+
+select * from tbl_telefone where usuariopessoa = 8;
+
+/*INNER JOIN*/
+
+select * from tbl_telefone as fone
+inner join tbl_usuario as usua
+on fone.usuariopessoa = usua.id
+
+select * from tbl_telefone;
+
+
+/*filtrar por item da tabela*/
+select numero, nome from tbl_telefone as fone
+inner join tbl_usuario as usua
+on fone.usuariopessoa = usua.id
+
+/*filtrar por ID*/
+select * from tbl_telefone as fone
+inner join tbl_usuario as usua
+on fone.usuariopessoa = usua.id
+where usua.id = 9

@@ -1,11 +1,13 @@
 package sql_jdbc_postgres.co.vilsonjesuino;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.Test;
 
 import sql_jdbc_postgres.co.vilsonjesuino.conexao.SingleConnection;
 import sql_jdbc_postgres.co.vilsonjesuino.dao.UsuarioDao;
+import sql_jdbc_postgres.co.vilsonjesuino.model.BeanUsuarioTelefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Telefone;
 import sql_jdbc_postgres.co.vilsonjesuino.model.Usuario;
 
@@ -90,5 +92,20 @@ public class TesteConexao {
 		
 		UsuarioDao dao = new UsuarioDao();
 		dao.salvarTelefone(telefone);
+	}
+	
+	@Test
+	public void testeCarregaDadosTelefone(){
+		
+		UsuarioDao dao = new UsuarioDao();
+		
+		List<BeanUsuarioTelefone> beanUsuarioTelefones = dao.listaUserFone(8L);
+		
+		for(BeanUsuarioTelefone beanUsuarioTelefone : beanUsuarioTelefones) {
+			System.out.println(beanUsuarioTelefone);
+			System.out.println("---------------------------");
+		}
+		
+		
 	}
 }
