@@ -66,4 +66,17 @@ public class TesteConexao {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testeDeletar() {
+		
+		try {
+			
+			UsuarioDao dao = new UsuarioDao();
+			dao.deletar(4L);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -120,5 +120,29 @@ public class UsuarioDao {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Method delete dados no banco de dados
+	 * @param id
+	 */
+	
+	public void deletar(Long id) {
+		
+		try {
+			
+			String sql = "delete from tbl_usuario where id = " + id;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.execute();
+			connection.commit();
+			
+		} catch (Exception e) {
+			try {
+				connection.rollback();
+			} catch (Exception e2) {
+				e.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
 
 }
